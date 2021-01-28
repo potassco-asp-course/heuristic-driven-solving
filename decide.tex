@@ -1,0 +1,35 @@
+\begin{frame}{Inside \alert<1>{\textit{decide}}}
+  \bigskip
+  \begin{itemize}
+  \item<2-> \structure{Basic concepts}
+    \begin{itemize}
+    \item Atoms, $\mathcal{A}$
+    \item Assignments, $\ass: \mathcal{A}\to\{\true,\false\}$
+      \begin{itemize}
+      \item[]
+        $\tlits{\ass}=\{a\in\mathcal{A}\mid\Tsigned{a}\in\ass\}$ \ and \
+        $\flits{\ass}=\,\{a\in\mathcal{A}\mid\Fsigned{a}\in\ass\}$
+      \end{itemize}
+    \end{itemize}
+  \item<3-> \structure{Heuristic functions}
+    \[
+    h: \mathcal{A}\to[0,+\infty)
+    \quad\text{and}\quad
+    s: \mathcal{A}\to\{\true,\false\}
+    \]
+  \item<4-> \structure{Algorithmic scheme}
+  \medskip
+    \begin{enumerate}
+    \item $h(a) := \alpha\times h(a) + \beta(a)$ \hfill for each $a\in\mathcal{A}\qquad$
+    \item $U:=\mathcal{A}\setminus (\tlits{\ass}\cup\flits{\ass})$
+    \item $C:= \textit{argmax}_{a\in U}h(a)$
+    \item $a:= \tau(C)$
+    \item $\ass := \ass\cup\{a\mapsto s(a)\}$
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

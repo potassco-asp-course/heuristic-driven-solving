@@ -1,0 +1,171 @@
+% ----------------------------------------------------------------------
+\lecture{Heuristic-driven solving}{hsolving}
+% ----------------------------------------------------------------------
+\part{Heuristic-driven solving}
+\newcommand{\data}[2]{&#1&#2} % STRANGE PLACING but only way
+% ----------------------------------------------------------------------
+\section{Motivation}
+% ----------------------------------------------------------------------
+\input{hsolving/motivation}
+% ----------------------------------------------------------------------
+\input{hsolving/cdcl}
+% ----------------------------------------------------------------------
+% \begin{frame}{Inside \alert<1>{\textit{decide}}}
+%   \bigskip
+%   \begin{itemize}
+%   \item<2-> \structure{Basic concepts}
+%     \begin{itemize}
+%     \item Atoms, $\mathcal{A}$
+%     \item Assignments, $\ass: \mathcal{A}\to\{\true,\false\}$
+%       \begin{itemize}
+%       \item[]
+%         $\tlits{\ass}=\{a\in\mathcal{A}\mid\Tsigned{a}\in\ass\}$ \ and \
+%         $\flits{\ass}=\,\{a\in\mathcal{A}\mid\Fsigned{a}\in\ass\}$
+%       \end{itemize}
+%     \end{itemize}
+%   \item<3-> \structure{Heuristic functions}
+%     \[
+%     h: \mathcal{A}\to[0,+\infty)
+%     \quad\text{and}\quad
+%     s: \mathcal{A}\to\{\true,\false\}
+%     \]
+%   \item<4-> \structure{Algorithmic scheme}
+%   \medskip
+%     \begin{enumerate}
+%     \item $h(a) := \alpha\times h(a) + \beta(a)$ \hfill for each $a\in\mathcal{A}\qquad$
+%     \item $U:=\mathcal{A}\setminus (\tlits{\ass}\cup\flits{\ass})$
+%     \item $C:= \textit{argmax}_{a\in U}h(a)$
+%     \item $a:= \tau(C)$
+%     \item $\ass := \ass\cup\{a\mapsto s(a)\}$
+%     \end{enumerate}
+%   \end{itemize}
+% \end{frame}
+% ----------------------------------------------------------------------
+\section{Heuristically modified ASP}
+% ----------------------------------------------------------------------
+\input{hsolving/hlanguage}
+% ----------------------------------------------------------------------
+\input{hsolving/hstrips}
+% ----------------------------------------------------------------------
+\input{hsolving/hoptions}
+% ----------------------------------------------------------------------
+\input{hsolving/hminimality}
+% ----------------------------------------------------------------------
+% \begin{frame}{Heuristic~modifications~to~functions~$h$~and~$s$}
+%   \medskip
+%   \begin{itemize}
+%   \item<2-> $\nu_{a,m}(\ass)$ --- ``{\em value for modifier $m$ on atom $a$ wrt assignment \ass}''
+%     \medskip
+%   \item<3-> \structure{\texttt{init}}\uncover<3->{ and \structure{\texttt{factor}}}
+%     \begin{align*}
+%       d_0(a)&=\quad\;\nu_{a,\mathtt{init}}(\ass_0)+h_0(a)
+%       % \text{ and for} i\geq 1
+%       \\
+%       \uncover<3->{d_i(a)}&\uncover<3->{=
+%         \left\{
+%           \begin{array}{rl}
+%             \nu_{a,\mathtt{factor}}(\ass_i)\times h_i(a)&\text{if } V_{a,\mathtt{factor}}(\ass_i)\neq\emptyset
+%             \\
+%             h_i(a)&\text{otherwise}
+%           \end{array}
+%         \right.}
+%     \end{align*}
+%   \item<3-> \structure{\texttt{sign}}
+%     \begin{align*}
+%       t_i(a)&=
+%       \left\{
+%         \begin{array}{rl}
+%           \true &\text{if }
+%           \nu_{a,\mathtt{sign}}(\ass_i)>0
+%           \\
+%           \false&\text{if }
+%           \nu_{a,\mathtt{sign}}(\ass_i)<0
+%           \\
+%           s_i(a)&\text{otherwise}
+%         \end{array}
+%       \right.\qquad\qquad\qquad\quad\;
+%     \end{align*}
+%   \item<3-> \structure{\texttt{level}} \quad
+%     \(
+%     \ell_{\ass_i}(\mathcal{A}')=\textit{argmax}_{a\in\mathcal{A}'}\nu_{a,\mathtt{level}}(\ass_i)
+%     \)
+%     \qquad
+%     $\mathcal{A}'\subseteq\mathcal{A}$
+%   \end{itemize}
+% \end{frame}
+% % ----------------------------------------------------------------------
+% \begin{frame}[c]{Inside \alert<1>{\textit{decide}}, {heuristically modified}}
+%   \pause
+%   \begin{enumerate}\addtocounter{enumi}{-1}
+%   \item $\alert<3>{h(a) := d(a)}$                         \hfill for each $a\in\mathcal{A}\qquad$
+%   \item $h(a) := \alpha\times h(a) + \beta(a)$ \hfill for each $a\in\mathcal{A}\qquad$
+%   \item $U:=\alert<3>{\ell_{\ass}}(\mathcal{A}\setminus (\tlits{\ass}\cup\flits{\ass}))$
+%   \item $C:= \textit{argmax}_{a\in U}\alert<3>{d}(a)$
+%   \item $a:= \tau(C)$
+%   \item $\ass := \ass\cup\{a\mapsto\alert<3>{t}(a)\}$
+%   \end{enumerate}
+% \end{frame}
+% ----------------------------------------------------------------------
+\section{Experimental results}
+% ----------------------------------------------------------------------
+\begin{frame}[c]{Abductive problems with optimization}
+\small
+\begin{center}
+  \begin{tabular}{|@{\;}l@{\;}|r@{s\,}@{\,(}r@{)\,}|r@{s\,}@{\,(}r@{)\,}|r@{s\,}@{\,(}r@{)\ }r@{s\,}@{\,(}r@{)\,}|}
+    \hline
+    \multicolumn{1}{|c|}{Setting} & \multicolumn{2}{c|}{\textit{Diagnosis}} & \multicolumn{2}{c|}{\textit{Expansion}} & \multicolumn{2}{c}{\textit{Repair (H)}} & \multicolumn{2}{c|}{\textit{Repair (S)}}\\
+    \hline
+         \textit{base configuration}            \data{         111.1 }{         115 }\data{        161.5 }{        100 }\data{        101.3 }{        113 }\data{         33.3 }{         27 }\\
+    \hline
+         \texttt{sign,-1}                       \data{         324.5 }{         407 }\data{          7.6 }{          3 }\data{          8.4 }{          5 }\data{          3.1 }{\alert<2>{0}}\\
+         \texttt{sign,-1}  \, \texttt{factor,2} \data{         310.1 }{         387 }\data{          7.4 }{\alert<2>{2}}\data{          3.5 }{\alert<2>{0}}\data{          3.2 }{          1 }\\
+         \texttt{sign,-1}  \, \texttt{factor,8} \data{         305.9 }{         376 }\data{          7.7 }{\alert<2>{2}}\data{          3.1 }{\alert<2>{0}}\data{          2.9 }{\alert<2>{0}}\\
+         \texttt{sign,-1}  \, \texttt{level,1}  \data{\alert<2>{76.1}}{\alert<2>{83}}\data{\alert<2>{6.6}}{\alert<2>{2}}\data{\alert<2>{0.8}}{\alert<2>{0}}\data{          2.2 }{          1 }\\
+\phantom{\texttt{sign,-1}} \, \texttt{level,1}  \data{          77.3 }{          86 }\data{         12.9 }{          5 }\data{          3.4 }{\alert<2>{0}}\data{\alert<2>{2.1}}{\alert<2>{0}}\\
+    \hline
+  \end{tabular}
+\end{center}
+\bigskip
+\ (abducibles subject to optimization via \texttt{\#minimize} statements)
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[c,fragile]{Planning  benchmarks}
+%
+\begin{semiverbatim}
+#heuristic holds(F,T-1) :     holds(F,T). [t-T+1, true]
+#heuristic holds(F,T-1) : not holds(F,T), fluent(F),time(T).
+                                          [t-T+1, false]
+\end{semiverbatim}
+\pause
+\smallskip
+\begin{center}\scriptsize
+  \newcommand{\pdata}[3]{&\,\ignorespaces#1$s$&(\ignorespaces#2/\ignorespaces#3)}
+  \newcommand{\sdata}[3]{&\,\ignorespaces#1$s$&(\ignorespaces#3)}
+  \begin{tabular}{|@{\,}r@{\,}|@{\,}r@{\,}@{\,}r@{\,}|@{\,}r@{\,}@{\,}r@{\,}|@{\,}r@{\,}@{\,}r@{\,}|@{\,}r@{\,}@{\,}r@{\,}|}
+    \hline
+   \multicolumn{1}{|@{\,}c@{\,}|@{\,}}{Problem} & \multicolumn{2}{c@{\,}|@{\,}}{\textit{base configuration}} &
+   \multicolumn{2}{c@{\,}|@{\,}}{\texttt{\#heuristic}} & \multicolumn{2}{c@{\,}|@{\,}}{\textit{base config.} (\alert<3>{SAT})} & \multicolumn{2}{c@{\,}|}{\texttt{\#heu.} (\alert<3>{SAT})} \\
+    \hline
+    \textit{Blocks'00}    \pdata{134.4}{ 180}{  61}\pdata{  9.2}{ 239}{  3}\sdata{163.2}{180}{59}\sdata{ 2.6}{239}{0}\\
+    \textit{Elevator'00}  \pdata{  3.1}{ 279}{   0}\pdata{  0.0}{ 279}{  0}\sdata{  3.4}{279}{ 0}\sdata{ 0.0}{279}{0}\\
+    \textit{Freecell'00}  \pdata{288.7}{ 147}{ 115}\pdata{184.2}{ 194}{ 74}\sdata{226.4}{147}{47}\sdata{52.0}{194}{0}\\
+    \textit{Logistics'00} \pdata{145.8}{ 148}{  61}\pdata{115.3}{ 168}{ 52}\sdata{113.9}{148}{23}\sdata{15.5}{168}{3}\\
+    \hline
+    \textit{Depots'02}    \pdata{400.3}{  51}{ 184}\pdata{297.4}{ 115}{135}\sdata{389.0}{ 51}{64}\sdata{61.6}{115}{0}\\
+    \textit{Driverlog'02} \pdata{308.3}{ 108}{ 143}\pdata{189.6}{ 169}{ 92}\sdata{245.8}{108}{61}\sdata{ 6.1}{169}{0}\\
+    \textit{Rovers'02}    \pdata{245.8}{ 138}{ 112}\pdata{165.7}{ 179}{ 79}\sdata{162.9}{138}{41}\sdata{ 5.7}{179}{0}\\
+    \textit{Satellite'02} \pdata{398.4}{  73}{ 186}\pdata{229.9}{ 155}{106}\sdata{364.6}{ 73}{82}\sdata{30.8}{155}{0}\\
+    \textit{Zenotravel'02}\pdata{350.7}{ 101}{ 169}\pdata{239.0}{ 154}{116}\sdata{224.5}{101}{53}\sdata{ 6.3}{154}{0}\\
+    \hline
+    \textit{Total}        \pdata{252.8}{\alert<3>{1225}}{1031}\pdata{158.9}{\alert<3>{1652}}{657}\sdata{\alert<3>{187.2}}{1225}{\alert<3>{430}}\sdata{\alert<3>{17.1}}{1652}{\alert<3>{3}}\\
+    \hline
+  \end{tabular}
+\end{center}
+\bigskip
+\end{frame}
+%------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "asp"
+%%% End:

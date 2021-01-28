@@ -1,0 +1,20 @@
+\begin{frame}{Inclusion-minimal stable models}
+  \bigskip
+  \begin{itemize}
+  \item<1-> Consider a logic program containing a mimimize statement of form
+    \begin{itemize}
+    \item \( \#\mathtt{minimize}\{ a_1,\dots,a_n\} \)
+    \end{itemize}
+    \smallskip
+  \item<2-> Computing one inclusion-minimal stable model can be done either via
+    \begin{itemize}\normalsize
+    \item \texttt{\#heuristic $a_i$ [1,false].} \qquad for $i=1,\dots,n$, \ or
+    \item \texttt{--dom-mod=5,16}
+    \end{itemize}
+    \smallskip
+  \item<3-> Computing all inclusion-minimal stable model can be done
+    \begin{itemize}\normalsize
+    \item by adding \texttt{--enum-mod=domRec} to the two options
+    \end{itemize}
+  \end{itemize}
+\end{frame}

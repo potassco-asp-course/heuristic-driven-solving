@@ -1,0 +1,59 @@
+\begin{frame}{Heuristic~modifications~to~functions~$h$~and~$s$}
+  \medskip
+  \begin{itemize}
+  \item<2-> $\nu_{a,m}(\ass)$ --- ``{\em value for modifier $m$ on atom $a$ wrt assignment \ass}''
+    \medskip
+  \item<3-> \structure{\texttt{init}}\uncover<3->{ and \structure{\texttt{factor}}}
+    \begin{align*}
+      d_0(a)&=\quad\;\nu_{a,\mathtt{init}}(\ass_0)+h_0(a)
+      % \text{ and for} i\geq 1
+      \\
+      \uncover<3->{d_i(a)}&\uncover<3->{=
+        \left\{
+          \begin{array}{rl}
+            \nu_{a,\mathtt{factor}}(\ass_i)\times h_i(a)&\text{if } V_{a,\mathtt{factor}}(\ass_i)\neq\emptyset
+            \\
+            h_i(a)&\text{otherwise}
+          \end{array}
+        \right.}
+    \end{align*}
+  \item<3-> \structure{\texttt{sign}}
+    \begin{align*}
+      t_i(a)&=
+      \left\{
+        \begin{array}{rl}
+          \true &\text{if }
+          \nu_{a,\mathtt{sign}}(\ass_i)>0
+          \\
+          \false&\text{if }
+          \nu_{a,\mathtt{sign}}(\ass_i)<0
+          \\
+          s_i(a)&\text{otherwise}
+        \end{array}
+      \right.\qquad\qquad\qquad\quad\;
+    \end{align*}
+  \item<3-> \structure{\texttt{level}} \quad
+    \(
+    \ell_{\ass_i}(\mathcal{A}')=\textit{argmax}_{a\in\mathcal{A}'}\nu_{a,\mathtt{level}}(\ass_i)
+    \)
+    \qquad
+    $\mathcal{A}'\subseteq\mathcal{A}$
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[c]{Inside \alert<1>{\textit{decide}}, {heuristically modified}}
+  \pause
+  \begin{enumerate}\addtocounter{enumi}{-1}
+  \item $\alert<3>{h(a) := d(a)}$                         \hfill for each $a\in\mathcal{A}\qquad$
+  \item $h(a) := \alpha\times h(a) + \beta(a)$ \hfill for each $a\in\mathcal{A}\qquad$
+  \item $U:=\alert<3>{\ell_{\ass}}(\mathcal{A}\setminus (\tlits{\ass}\cup\flits{\ass}))$
+  \item $C:= \textit{argmax}_{a\in U}\alert<3>{d}(a)$
+  \item $a:= \tau(C)$
+  \item $\ass := \ass\cup\{a\mapsto\alert<3>{t}(a)\}$
+  \end{enumerate}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

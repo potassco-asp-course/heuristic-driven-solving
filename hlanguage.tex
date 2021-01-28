@@ -1,0 +1,34 @@
+\begin{frame}[fragile]{Heuristic language}
+\begin{itemize}\normalsize
+\item<1-> \structure{Heuristic directive} \
+  \smallskip
+  \begin{itemize}
+  \item[] \( \#\mathtt{heuristic} \ a\ :\; l_1,\dots,l_n. \ [k@p,m] \)
+  \end{itemize}
+  \smallskip
+  where
+  \begin{itemize}
+  \item $a$ is an atom, and $l_1,\dots,l_n$ are literals
+  \item $k$ and $p$ are integers
+  \item $m$ is a heuristic modifier
+  \end{itemize}
+\item<2-> \structure{Heuristic modifiers} \
+  \begin{description}
+  \item [\alert<2>{\texttt{init}}] for initializing the heuristic value of $a$ with $k$
+  \item [\alert<2,5>{\texttt{factor}}] for amplifying the heuristic value of $a$ by factor $k$
+  \item [\alert<2>{\texttt{level}}] for ranking all atoms; the rank of $a$ is $k$
+  \item [\alert<2>{\texttt{sign}}] for attributing the sign of $k$ as truth value to $a$
+  \item<only@3>[\alert<3>{\texttt{true/false}}] combine \texttt{level} and \texttt{sign}
+  \end{description}
+\item<4-> \structure{Example}
+\small
+\begin{semiverbatim}
+\#heuristic \alert<5>{occurs(\only<-4>{A}\only<5->{mv},\only<-4>{T}\only<5->{5})} : action(\only<-4>{A}\only<5->{mv}), time(\only<-4>{T}\only<5->{5}). [\alert<5>{\only<-4>{T}\only<5->{5}}, \alert<5>{factor}]
+\end{semiverbatim}
+\end{itemize}
+\end{frame}
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../asp"
+%%% End:
