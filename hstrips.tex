@@ -1,3 +1,4 @@
+% ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink=1]{Simple STRIPS planning}
 \begin{semiverbatim}
 time(1..k).
@@ -16,14 +17,15 @@ holds(F,T) :- holds(F,T-1), time(T), not occ(A,T) : del(A,F).
 
 }\only<2-4>{\#heuristic occurs(A,T) : action(A), time(T). [\only<2>{2, factor}\only<3>{1, level}\only<4>{T, factor}]
 
-}\only<5>{\#heuristic holds(F,T-1) :     holds(F,T). [t-T+1, true]
-\#heuristic holds(F,T-1) : not holds(F,T)  [t-T+1, false]
+}\only<5>{\#heuristic holds(F,T-1) :     holds(F,T).  [k-T+1, true]
+\#heuristic holds(F,T-1) : not holds(F,T),  [k-T+1, false]
                           fluent(F), time(T).}
 
 \end{semiverbatim}
 \end{frame}
+% ----------------------------------------------------------------------
 %
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../"
+%%% TeX-master: "../../main"
 %%% End:
